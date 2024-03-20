@@ -123,7 +123,7 @@ def update_ad_set_table(test_name, ad_names):
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
-    INSERT INTO `brillia-415723.streamlit_data.CreativeTestingStorage` (Test_Name, Ad_Names, Type, Campaign) VALUES (@new_ad_test, @ad_names, 'Current', Campaign)
+    INSERT INTO `brillia-415723.streamlit_data.CreativeTestingStorage` (Test_Name, Ad_Names, Type, Campaign) VALUES (@new_ad_test, @ad_names, 'Current', 'CF_PROS_APSC_Conversions_Test_012424')
     """
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
