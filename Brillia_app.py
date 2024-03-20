@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pandas_gbq
-import pandas 
+import pandas
 import os
 from google.oauth2 import service_account
 from google.cloud import bigquery
@@ -19,6 +19,8 @@ import re
 credentials = service_account.Credentials.from_service_account_info(
           st.secrets["gcp_service_account"]
       )
+
+client = bigquery.Client(credentials=credentials)
 
 #### Information to be changed when switching accounts ###
 Account = "Brillia"
@@ -76,7 +78,7 @@ def download_blob_to_temp(bucket_name, source_blob_name, temp_folder="/tmp"):
 def filter_ad_names_by_campaign(ad_set, campaign_name, full_data):
 
     #Fiter to the ad_set
-    filtered_data = full_data[full_data['Ad_Set_Name__Facebook_Ads'] == ad_set] 
+    filtered_data = full_data[full_data['Ad_Set_Name__Facebook_Ads'] == ad_set]
           
     # Filter the full_data DataFrame for the given campaign name   
     filtered_data = full_data[full_data['Campaign_Name__Facebook_Ads'] == campaign_name]
@@ -121,7 +123,7 @@ def update_ad_set_table(test_name, ad_names):
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
-    INSERT INTO `brillia-415723.streamlit_data.CreativeTestingStorage` (Test_Name, Ad_Names, Type) VALUES (@new_ad_test, @ad_names, 'Current')
+    INSERT INTO `brillia-415723.streamlit_data.CreativeTestingStorage` (Test_Name, Ad_Names, Type, Campaign) VALUES (@new_ad_test, @ad_names, 'Current', Campaign)
     """
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
@@ -323,7 +325,7 @@ def main_dashboard():
 
 
   # Streamlit interface for selecting new ad set
-  with st.expander("Update Test and Upload Images"):
+  with st.expander("Update Test"):
     test_name = st.text_input("Enter Test Name")
     number_of_ads = st.number_input("How many ad names do you want to enter?", min_value=1, format='%d')
     new_ad_names = []
@@ -342,7 +344,7 @@ def main_dashboard():
             all_filled = False  # Mark as not ready if any ad name is missing
 
      # Enable the upload button only if all conditions are met
-    if all_filled: 
+    if all_filled:
         # Update the database with the new test name and associated ad names
         combined_ad_names = ",".join(new_ad_names)
         update_ad_set_table(test_name, combined_ad_names)
@@ -354,7 +356,7 @@ def main_dashboard():
   else:              
             current_Ad_Set = current_test_data['Test_Name'].iloc[0]
 
-            # Get list of ad_names from ad names string 
+            # Get list of ad_names from ad names string
             ad_names = current_test_data['Ad_Names'].iloc[0]
             ad_names = ad_names.split(',')
           
