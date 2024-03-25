@@ -27,7 +27,7 @@ Account = "Brillia"
 bucket_name = "creativetesting_images_brillia"
 main_table_id = 'brillia-415723.brillia_segments.ad_level_data'
 creativetesting_table_id = 'brillia-415723.streamlit_data.CreativeTestingStorage'
-correct_hashed_password = "Brillia"
+correct_hashed_password = "CFBrilliaAdTest8713$"
 
 st.set_page_config(page_title= f"{Account} Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
