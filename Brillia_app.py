@@ -290,7 +290,6 @@ def main_dashboard():
       'Campaign_Name__Facebook_Ads': 'Campaign',
       'Ad_Set_Name__Facebook_Ads': 'Ad_Set',
       'Ad_Name__Facebook_Ads' : 'Ad_Name',
-      'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Preview_Link',
       'Impressions__Facebook_Ads' : 'Impressions',
       'Link_Clicks__Facebook_Ads' : 'Clicks',
       'Amount_Spent__Facebook_Ads' : 'Cost',
@@ -347,7 +346,7 @@ def main_dashboard():
             
             data = ad_set_data
                     
-            selected_columns = ['Ad_Name','Ad_Preview_Link', 'Impressions', 'Clicks','Cost', 'Purchases', 'Revenue']
+            selected_columns = ['Ad_Name', 'Ad_Link', 'Impressions', 'Clicks','Cost', 'Purchases', 'Revenue']
             
             filtered_data = data[selected_columns]
           
@@ -383,13 +382,13 @@ def main_dashboard():
             
             total_df = pd.DataFrame([total])
             # Reorder columns in total_df to match aggregated_data
-            total_df = total_df[[ 'Ad_Name','Ad_Preview_Link', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
+            total_df = total_df[[ 'Ad_Name','Ad_Link', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
           
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
 
           
-            column_order = ['Ad_Name','Ad_Preview_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
+            column_order = ['Ad_Name','Ad_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
             final_df = final_df[column_order]
           
             final_df.reset_index(drop=True, inplace=True)
