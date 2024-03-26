@@ -172,7 +172,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     total['CPM'] = (total['Cost']/total['Impressions'])*1000
     total['CTR'] = total['Clicks']/total['Impressions']
     total['CVR'] = total['Purchases']/total['Clicks']
-    total['CPL'] = total['Cost']/total['Purchases']
+    total['CPA'] = total['Cost']/total['Purchases']
     total['Ad_Name'] = ""
     total['Ad_Set'] = 'Total'
   
@@ -181,14 +181,14 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
     aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
     aggregated_data['CVR'] = aggregated_data['Purchases']/aggregated_data['Clicks']
-    aggregated_data['CPL'] = aggregated_data['Cost']/aggregated_data['Purchases']
+    aggregated_data['CPA'] = aggregated_data['Cost']/aggregated_data['Purchases']
 
     #Sort Purchases so highest performer is at the top
     aggregated_data.sort_values(by='Purchases', ascending=False, inplace=True)
   
     total_df = pd.DataFrame([total])
     # Reorder columns in total_df to match aggregated_data
-    total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'CPL', 'CPC', 'CPM', 'CTR', 'CVR']]
+    total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
 
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
@@ -222,7 +222,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     # Add the significance results to the DataFrame
     final_df['Significance'] = significance_results
 
-    column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPL', 'CVR', 'Significance']
+    column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR', 'Significance']
     final_df = final_df[column_order]
   
     final_df.reset_index(drop=True, inplace=True)
@@ -231,9 +231,9 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     final_df['Cost'] = round(final_df['Cost'], 0).astype(int)
     final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x}")
 
-    final_df['CPL'] = round(final_df['CPL'], 0).astype(int)
-    #final_df['CPL'] = final_df['CPL'].apply(lambda x: f"${x}")
-    final_df['CPL'] = final_df['CPL'].apply(lambda x: '' if abs(x) > 10000 else f"${x}")
+    final_df['CPA'] = round(final_df['CPA'], 0).astype(int)
+    #final_df['CPA'] = final_df['CPA'].apply(lambda x: f"${x}")
+    final_df['CPA'] = final_df['CPA'].apply(lambda x: '' if abs(x) > 10000 else f"${x}")
 
     final_df['CPC'] = round(final_df['CPC'], 2)
     final_df['CPC'] = final_df['CPC'].apply(lambda x: f"${x}")
@@ -388,7 +388,7 @@ def main_dashboard():
             total['CPM'] = (total['Cost']/total['Impressions'])*1000
             total['CTR'] = total['Clicks']/total['Impressions']
             total['CVR'] = total['Purchases']/total['Clicks']
-            total['CPL'] = total['Cost']/total['Purchases']
+            total['CPA'] = total['Cost']/total['Purchases']
             total['Ad_Name'] = ""
             total['Ad_Set'] = 'Total'
             
@@ -397,14 +397,14 @@ def main_dashboard():
             aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
             aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
             aggregated_data['CVR'] = aggregated_data['Purchases']/aggregated_data['Clicks']
-            aggregated_data['CPL'] = aggregated_data['Cost']/aggregated_data['Purchases']
+            aggregated_data['CPA'] = aggregated_data['Cost']/aggregated_data['Purchases']
           
             #Sort Purchases so highest performer is at the top
             aggregated_data.sort_values(by='Purchases', ascending=False, inplace=True)
             
             total_df = pd.DataFrame([total])
             # Reorder columns in total_df to match aggregated_data
-            total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'CPL', 'CPC', 'CPM', 'CTR', 'CVR']]
+            total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
           
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
@@ -437,7 +437,7 @@ def main_dashboard():
             # Add the significance results to the DataFrame
             final_df['Significance'] = significance_results
           
-            column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPL', 'CVR', 'Significance']
+            column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR', 'Significance']
             final_df = final_df[column_order]
           
             final_df.reset_index(drop=True, inplace=True)
@@ -450,9 +450,9 @@ def main_dashboard():
             final_df['Cost'] = round(final_df['Cost'], 0).astype(int)
             final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x}")
           
-            final_df['CPL'] = round(final_df['CPL'], 0).astype(int)
-            #final_df['CPL'] = final_df['CPL'].apply(lambda x: f"${x}")
-            final_df['CPL'] = final_df['CPL'].apply(lambda x: '' if abs(x) > 10000 else f"${x}")
+            final_df['CPA'] = round(final_df['CPA'], 0).astype(int)
+            #final_df['CPA'] = final_df['CPA'].apply(lambda x: f"${x}")
+            final_df['CPA'] = final_df['CPA'].apply(lambda x: '' if abs(x) > 10000 else f"${x}")
           
             final_df['CPC'] = round(final_df['CPC'], 2)
             final_df['CPC'] = final_df['CPC'].apply(lambda x: f"${x}")
