@@ -176,6 +176,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     total['CPA'] = total['Cost']/total['Purchases']
     total['ROAS'] = total['Revenue']/total['Cost']  
     total['Ad_Name'] = ""
+    total['Ad_Link'] = ""
     total['Ad_Set'] = 'Total'
   
     #Calculate cols
@@ -297,8 +298,6 @@ def main_dashboard():
       'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
-
-  st.write(data.columns)
           
   # Streamlit interface for selecting new ad set
   with st.expander("Update Test"):
@@ -367,6 +366,7 @@ def main_dashboard():
             total['CPA'] = total['Cost']/total['Purchases']
             total['ROAS'] = total['Revenue']/total['Cost'] 
             total['Ad_Name'] = ""
+            total['Ad_Link'] = ""
             total['Ad_Set'] = 'Total'
             
             #Calculate cols
@@ -382,12 +382,11 @@ def main_dashboard():
             
             total_df = pd.DataFrame([total])
             # Reorder columns in total_df to match aggregated_data
-            total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
+            total_df = total_df[[ 'Ad_Name', 'Ad_Link', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
           
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
 
-          
             column_order = ['Ad_Name','Ad_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
             final_df = final_df[column_order]
           
