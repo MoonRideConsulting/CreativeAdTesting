@@ -148,6 +148,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
       'Link_Clicks__Facebook_Ads' : 'Clicks',
       'Amount_Spent__Facebook_Ads' : 'Cost',
       'Purchases__Facebook_Ads' : 'Purchases',
+      'Purchases_Conversion_Value__Facebook_Ads' : 'Revenue',
       'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
     })
@@ -162,7 +163,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     ad_set_data = ad_set_data[ad_set_data['Campaign'] == campaign]
           
     # Your data processing steps
-    selected_columns = ['Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases']
+    selected_columns = ['Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue']
     filtered_data = ad_set_data[selected_columns]
     grouped_data = filtered_data.groupby(['Ad_Name']).sum()
     aggregated_data = grouped_data.reset_index()
@@ -173,6 +174,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     total['CTR'] = total['Clicks']/total['Impressions']
     total['CVR'] = total['Purchases']/total['Clicks']
     total['CPA'] = total['Cost']/total['Purchases']
+    total['ROAS'] = total['Revenue']/total['Cost']  
     total['Ad_Name'] = ""
     total['Ad_Set'] = 'Total'
   
@@ -182,19 +184,19 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
     aggregated_data['CVR'] = aggregated_data['Purchases']/aggregated_data['Clicks']
     aggregated_data['CPA'] = aggregated_data['Cost']/aggregated_data['Purchases']
+    aggregated_data['ROAS'] = aggregated_data['Revenue']/aggregated_data['Cost']
 
     #Sort Purchases so highest performer is at the top
     aggregated_data.sort_values(by='Purchases', ascending=False, inplace=True)
   
     total_df = pd.DataFrame([total])
     # Reorder columns in total_df to match aggregated_data
-    total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
+    total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
 
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
 
-
-    column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR']
+    column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
     final_df = final_df[column_order]
   
     final_df.reset_index(drop=True, inplace=True)
@@ -291,6 +293,7 @@ def main_dashboard():
       'Link_Clicks__Facebook_Ads' : 'Clicks',
       'Amount_Spent__Facebook_Ads' : 'Cost',
       'Purchases__Facebook_Ads' : 'Purchases',
+      'Purchases_Conversion_Value__Facebook_Ads' : 'Revenue',
       'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
@@ -342,7 +345,7 @@ def main_dashboard():
             
             data = ad_set_data
                     
-            selected_columns = ['Ad_Name', 'Impressions', 'Clicks','Cost', 'Purchases']
+            selected_columns = ['Ad_Name', 'Impressions', 'Clicks','Cost', 'Purchases', 'Revenue']
             
             filtered_data = data[selected_columns]
           
@@ -361,6 +364,7 @@ def main_dashboard():
             total['CTR'] = total['Clicks']/total['Impressions']
             total['CVR'] = total['Purchases']/total['Clicks']
             total['CPA'] = total['Cost']/total['Purchases']
+            total['ROAS'] = total['Revenue']/total['Cost'] 
             total['Ad_Name'] = ""
             total['Ad_Set'] = 'Total'
             
@@ -370,19 +374,20 @@ def main_dashboard():
             aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
             aggregated_data['CVR'] = aggregated_data['Purchases']/aggregated_data['Clicks']
             aggregated_data['CPA'] = aggregated_data['Cost']/aggregated_data['Purchases']
-          
+            aggregated_data['ROAS'] = aggregated_data['Revenue']/aggregated_data['Cost'] 
+            
             #Sort Purchases so highest performer is at the top
             aggregated_data.sort_values(by='Purchases', ascending=False, inplace=True)
             
             total_df = pd.DataFrame([total])
             # Reorder columns in total_df to match aggregated_data
-            total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
+            total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
           
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
 
           
-            column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR']
+            column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
             final_df = final_df[column_order]
           
             final_df.reset_index(drop=True, inplace=True)
