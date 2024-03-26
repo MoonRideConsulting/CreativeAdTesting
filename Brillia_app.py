@@ -283,8 +283,6 @@ def main_dashboard():
   past_test_data = st.session_state.past_test_data
   past_test_data['Test_Name'] = past_test_data['Test_Name'].apply(lambda x: x.strip("'"))
   past_test_data = past_test_data.iloc[::-1].reset_index(drop=True)
-
-  st.write(data.columns)
           
   # Renaming columns in a DataFrame
   data = data.rename(columns={
@@ -300,7 +298,8 @@ def main_dashboard():
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
 
-
+  st.write(data.columns)
+          
   # Streamlit interface for selecting new ad set
   with st.expander("Update Test"):
     test_name = st.text_input("Enter Test Name")
