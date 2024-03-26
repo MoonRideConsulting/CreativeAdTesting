@@ -144,7 +144,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
       'Campaign_Name__Facebook_Ads': 'Campaign',
       'Ad_Set_Name__Facebook_Ads': 'Ad_Set',
       'Ad_Name__Facebook_Ads' : 'Ad_Name',
-      'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Preview_Link',
+      'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Preview_Link',
       'Impressions__Facebook_Ads' : 'Impressions',
       'Link_Clicks__Facebook_Ads' : 'Clicks',
       'Amount_Spent__Facebook_Ads' : 'Cost',
