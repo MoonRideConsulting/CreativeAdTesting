@@ -193,36 +193,8 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
 
-    # Initialize an empty list to store significance results
-    significance_results = []
-  
-    # Top row data for comparison
-    top_ad_Purchases = final_df.iloc[0]['Purchases']
-    top_ad_impressions = final_df.iloc[0]['Impressions'] 
- 
-          
-    # Iterate through each row except the first and last
-    for index, row in final_df.iloc[1:-1].iterrows():
-        variant_Purchases = row['Purchases']
-        variant_impressions = row['Impressions']
-  
-        # Chi-square test
-        chi2, p_value, _, _ = chi2_contingency([
-            [top_ad_Purchases, top_ad_impressions - top_ad_Purchases],
-            [variant_Purchases, variant_impressions - variant_Purchases]
-        ])
-  
-        # Check if the result is significant and store the result
-        significance_label = f"{p_value:.3f} - {'Significant' if p_value < 0.05 else 'Not significant'}"
-        significance_results.append(significance_label)
 
-    # Add a placeholder for the top row and append for the total row
-    significance_results = [''] + significance_results + ['']
-      
-    # Add the significance results to the DataFrame
-    final_df['Significance'] = significance_results
-
-    column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR', 'Significance']
+    column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR']
     final_df = final_df[column_order]
   
     final_df.reset_index(drop=True, inplace=True)
@@ -409,41 +381,11 @@ def main_dashboard():
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
 
-            # Initialize an empty list to store significance results
-            significance_results = []
-            
-            # Top row data for comparison
-            top_ad_Purchases = final_df.iloc[0]['Purchases']
-            top_ad_impressions = final_df.iloc[0]['Impressions']
-            
-            # Iterate through each row except the first and last
-            for index, row in final_df.iloc[1:-1].iterrows():
-                variant_Purchases = row['Purchases']
-                variant_impressions = row['Impressions']
-            
-                # Chi-square test
-                chi2, p_value, _, _ = chi2_contingency([
-                    [top_ad_Purchases, top_ad_impressions - top_ad_Purchases],
-                    [variant_Purchases, variant_impressions - variant_Purchases]
-                ])
-            
-                # Check if the result is significant and store the result
-                significance_label = f"{p_value:.3f} - {'Significant' if p_value < 0.05 else 'Not significant'}"
-                significance_results.append(significance_label)
           
-            # Add a placeholder for the top row and append for the total row
-            significance_results = [''] + significance_results + ['']
-            
-            # Add the significance results to the DataFrame
-            final_df['Significance'] = significance_results
-          
-            column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR', 'Significance']
+            column_order = ['Ad_Name', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'CPA', 'CVR']
             final_df = final_df[column_order]
           
             final_df.reset_index(drop=True, inplace=True)
-          
-            uploaded_images = []
-            image_captions = []
           
           
             #Format final_df correctly
