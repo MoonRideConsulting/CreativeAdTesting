@@ -218,6 +218,11 @@ def process_ad_set_data(data, test, past_test_data, campaign):
 
     final_df['CTR'] = final_df['CTR'].apply(lambda x: f"{x*100:.2f}%")
     final_df['CVR'] = final_df['CVR'].apply(lambda x: f"{x*100:.2f}%")   
+
+    final_df['ROAS'] = round(final_df['ROAS'], 2)
+
+    final_df['Revenue'] = round(final_df['Revenue'], 2)
+    final_df['Revenue'] = final_df['Revenue'].apply(lambda x: f"${x}")
           
     return final_df
     
@@ -409,6 +414,11 @@ def main_dashboard():
           
             final_df['CTR'] = final_df['CTR'].apply(lambda x: f"{x*100:.2f}%")
             final_df['CVR'] = final_df['CVR'].apply(lambda x: f"{x*100:.2f}%")
+
+            final_df['ROAS'] = round(final_df['ROAS'], 2)
+
+            final_df['Revenue'] = round(final_df['Revenue'], 2)
+            final_df['Revenue'] = final_df['Revenue'].apply(lambda x: f"${x}")
                     
             # Display the aggregated data
             st.dataframe(final_df, width=2000)
