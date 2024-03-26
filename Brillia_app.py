@@ -448,6 +448,3 @@ def main_dashboard():
 
 if __name__ == '__main__':
     password_protection()
-
-    
-    
