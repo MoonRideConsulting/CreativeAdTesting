@@ -382,7 +382,7 @@ def main_dashboard():
             
             total_df = pd.DataFrame([total])
             # Reorder columns in total_df to match aggregated_data
-            total_df = total_df[[ 'Ad_Name','Ad_Link', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
+            total_df = total_df[[ 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CPC', 'CPM', 'CTR', 'CVR']]
           
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
