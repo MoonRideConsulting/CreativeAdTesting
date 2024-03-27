@@ -355,13 +355,20 @@ def main_dashboard():
             filtered_data = data[selected_columns]
           
             # Grouping the data by 'Ad_Set'
-            grouped_data = filtered_data.groupby(['Ad_Name'])
+            grouped_data = filtered_data.groupby(['Ad_Name']).agg({
+                'Impressions': 'sum',
+                'Clicks': 'sum',
+                'Cost': 'sum',
+                'Purchases': 'sum',
+                'Revenue': 'sum',
+                'Ad_Link': 'first'  # Keep the first link
+            }).reset_index()
             
             # Summing up the numeric columns for each group
-            aggregated_data = grouped_data.sum()
+            #aggregated_data = grouped_data.sum()
             
             # Reset the index
-            aggregated_data.reset_index(inplace=True)
+            #aggregated_data.reset_index(inplace=True)
           
             total = aggregated_data.sum(numeric_only=True)
             total['CPC'] = total['Cost']/total['Clicks']
