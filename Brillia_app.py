@@ -165,8 +165,14 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     # Your data processing steps
     selected_columns = ['Ad_Name', 'Ad_Link', 'Impressions', 'Clicks', 'Cost', 'Purchases', 'Revenue']
     filtered_data = ad_set_data[selected_columns]
-    grouped_data = filtered_data.groupby(['Ad_Name']).sum()
-    aggregated_data = grouped_data.reset_index()
+    aggregated_data = filtered_data.groupby(['Ad_Name']).agg({
+          'Impressions': 'sum',
+          'Clicks': 'sum',
+          'Cost': 'sum',
+          'Purchases': 'sum',
+          'Revenue': 'sum',
+          'Ad_Link': 'first'  # Keep the first link
+    }).reset_index()
           
     total = aggregated_data.sum(numeric_only=True)
     total['CPC'] = total['Cost']/total['Clicks']
