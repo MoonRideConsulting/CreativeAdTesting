@@ -197,7 +197,7 @@ def process_ad_set_data(data, test, past_test_data, campaign):
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
 
-    column_order = ['Ad_Name','Ad_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
+    column_order = ['Ad_Name','Ad_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'CPA', 'CVR', 'ROAS']
     final_df = final_df[column_order]
   
     final_df.reset_index(drop=True, inplace=True)
@@ -392,7 +392,7 @@ def main_dashboard():
             # Concatenate aggregated_data with total_df
             final_df = pd.concat([aggregated_data, total_df])
 
-            column_order = ['Ad_Name','Ad_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'ROAS', 'CPA', 'CVR']
+            column_order = ['Ad_Name','Ad_Link', 'Cost', 'CPM', 'Clicks', 'CPC', 'CTR', 'Purchases', 'Revenue', 'CPA', 'CVR', 'ROAS']
             final_df = final_df[column_order]
           
             final_df.reset_index(drop=True, inplace=True)
