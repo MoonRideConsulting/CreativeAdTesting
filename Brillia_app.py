@@ -355,7 +355,7 @@ def main_dashboard():
             filtered_data = data[selected_columns]
           
             # Grouping the data by 'Ad_Set'
-            grouped_data = filtered_data.groupby(['Ad_Name']).agg({
+            aggregated_data = filtered_data.groupby(['Ad_Name']).agg({
                 'Impressions': 'sum',
                 'Clicks': 'sum',
                 'Cost': 'sum',
